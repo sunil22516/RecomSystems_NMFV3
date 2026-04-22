@@ -1,0 +1,195 @@
+10-MINUTE DEMO SCRIPT
+Project: NeuMF Movie Recommender (Full Stack)
+
+Use this as a spoken script while screen recording.
+For each section, follow: SAY -> SHOW -> POINT.
+
+----------------------------------------------------------------
+0:00 - 0:30 | Intro
+SAY:
+Hi everyone. In this demo, I will show a complete movie recommendation system built from my NeuMF project. It includes model artifacts, a Flask backend API, and an interactive frontend.
+
+SHOW:
+Open VS Code project explorer at the workspace root.
+
+POINT:
+Point at:
+- CF_NeuMF_v3_checkpoint.ipynb
+- checkpoints folder
+- ml-100k folder
+- neumf_fullstack folder
+
+----------------------------------------------------------------
+0:30 - 1:15 | Problem and Goal
+SAY:
+The goal is to generate personalized movie recommendations from MovieLens data, and serve them through a local web app.
+
+SHOW:
+Open the notebook briefly, then return to the full stack app folder.
+
+POINT:
+Point to recommendation output area in notebook, then point to neumf_fullstack.
+
+----------------------------------------------------------------
+1:15 - 2:00 | Architecture Overview
+SAY:
+This app is split into three parts: recommendation engine logic, API routes, and frontend UI behavior.
+
+SHOW:
+Open these files one by one:
+- neumf_fullstack/recommender.py
+- neumf_fullstack/app.py
+- neumf_fullstack/static/js/app.js
+
+POINT:
+Point to:
+- recommend function logic in recommender.py
+- /api/recommend route in app.py
+- fetch call to /api/recommend in app.js
+
+----------------------------------------------------------------
+2:00 - 2:45 | Run Locally
+SAY:
+Now I will run the application locally.
+
+SHOW (Terminal):
+cd C:\Users\CI_Lab\Downloads\CF
+.\.venv\Scripts\Activate.ps1
+python .\neumf_fullstack\app.py
+
+POINT:
+Point at the line: Running on http://127.0.0.1:8000
+
+----------------------------------------------------------------
+2:45 - 3:30 | UI Walkthrough
+SAY:
+This is the main dashboard where I control the recommendation behavior.
+
+SHOW:
+Open browser at http://127.0.0.1:8000
+
+POINT:
+Point to:
+- User ID input
+- Strategy select
+- Top-K slider
+- Surprise Mode toggle
+- Diversity slider
+- Freshness slider
+
+----------------------------------------------------------------
+3:30 - 4:30 | First Recommendation Run
+SAY:
+First, I will generate recommendations for a random user.
+
+SHOW:
+Click Random User, then click Recommend Now.
+
+POINT:
+Point to:
+- Recent Watch History panel
+- Top Recommendations panel
+
+----------------------------------------------------------------
+4:30 - 5:45 | Show Variation Fix
+SAY:
+In this version, recommendations no longer stay identical every time. With Surprise Mode enabled, repeated runs can produce varied but still relevant results.
+
+SHOW:
+Keep the same user and click Recommend Now 2 to 3 times.
+
+POINT:
+Point to changing movie cards across runs.
+Then point to Surprise Mode and Diversity controls.
+
+----------------------------------------------------------------
+5:45 - 6:30 | Stable Mode
+SAY:
+If I disable Surprise Mode, the system becomes deterministic and returns stable results for reproducibility.
+
+SHOW:
+Turn off Surprise Mode. Run recommendation twice.
+
+POINT:
+Point to same output repeating.
+
+----------------------------------------------------------------
+6:30 - 7:15 | Freshness Control
+SAY:
+Freshness reduces repeats from recently served recommendations.
+
+SHOW:
+Turn Surprise Mode back on. Increase Freshness. Run again.
+
+POINT:
+Point to Freshness slider, then point to changed recommendations.
+
+----------------------------------------------------------------
+7:15 - 8:00 | Title Search
+SAY:
+The UI also supports title search for quick inspection of movie metadata.
+
+SHOW:
+Search for "Toy Story" or "Batman" and click Search.
+
+POINT:
+Point to search result cards and genre chips.
+
+----------------------------------------------------------------
+8:00 - 8:50 | API Validation
+SAY:
+Now I will validate the recommendation API directly from terminal.
+
+SHOW (second terminal):
+Invoke-RestMethod "http://127.0.0.1:8000/api/recommend?user_id=0&k=10&strategy=hybrid&randomize=true&diversity=0.45&novelty_penalty=0.08"
+
+POINT:
+Point to these returned fields:
+- ok
+- strategy
+- randomize
+- diversity
+- novelty_penalty
+
+----------------------------------------------------------------
+8:50 - 9:35 | Quick File Recap
+SAY:
+So the complete flow is data and checkpoints, recommendation service, API routing, and frontend controls.
+
+SHOW:
+Quickly open:
+- checkpoints
+- neumf_fullstack/recommender.py
+- neumf_fullstack/app.py
+- neumf_fullstack/static/js/app.js
+
+POINT:
+Point in this exact order so viewers map architecture quickly.
+
+----------------------------------------------------------------
+9:35 - 10:00 | Closing
+SAY:
+To conclude, this system now supports both stable and diverse recommendation behavior, and runs fully on local deployment with an interactive demo-ready UI. Thank you.
+
+SHOW:
+End on the running app with recommendation results visible.
+
+POINT:
+Point to controls and recommendation grid one last time.
+
+----------------------------------------------------------------
+RECORDING CHECKLIST (Before You Start)
+1) Set browser zoom to around 110% so text is readable.
+2) Keep two terminals open: one for server, one for API checks.
+3) Practice one pass of Surprise ON vs OFF before recording.
+4) Move cursor slowly and pause 1 second before each click.
+5) Keep your terminal and browser windows sized consistently.
+
+----------------------------------------------------------------
+BACKUP LINE IF SOMETHING BREAKS DURING RECORDING
+SAY:
+I will quickly restart the local service and continue from the same step.
+
+RUN:
+python .\neumf_fullstack\app.py
+

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeuMF Movie Recommender</title>
+    <meta
+      name="description"
+      content="Full-stack NeuMF movie recommendation dashboard powered by your MovieLens checkpoints."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+    <script defer src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </head>
+  <body>
+    <div class="backdrop">
+      <span class="blob blob-a"></span>
+      <span class="blob blob-b"></span>
+      <span class="blob blob-c"></span>
+      <span class="grid-overlay"></span>
+    </div>
+
+    <header class="topbar reveal">
+      <div class="brand">
+        <p class="eyebrow">Collaborative Filtering</p>
+        <h1>NeuMF Recommender Studio</h1>
+      </div>
+      <div class="meta" id="dataset-stats">
+        <p class="muted">Loading model metadata...</p>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="card controls reveal delay-1">
+        <h2>Generate Recommendations</h2>
+        <p class="muted">
+          Choose a user, strategy, and top-k size. This app reads from your existing checkpoints and dataset files.
+        </p>
+
+        <form id="reco-form">
+          <div class="field-row">
+            <label for="user-id">User ID (internal index)</label>
+            <div class="inline-inputs">
+              <input id="user-id" type="number" min="0" step="1" required />
+              <button id="random-user-btn" class="ghost" type="button">Random User</button>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <label for="strategy">Scoring Strategy</label>
+            <select id="strategy"></select>
+          </div>
+
+          <div class="field-row">
+            <label for="k-range">Top-K</label>
+            <div class="inline-inputs">
+              <input id="k-range" type="range" min="5" max="30" step="1" value="10" />
+              <span id="k-value" class="pill">10</span>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <label for="surprise-mode">Surprise Mode</label>
+            <div class="inline-inputs inline-toggle">
+              <label class="toggle-wrap" for="surprise-mode">
+                <input id="surprise-mode" type="checkbox" checked />
+                <span>Enable varied recommendations</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <label for="diversity-range">Diversity</label>
+            <div class="inline-inputs">
+              <input id="diversity-range" type="range" min="0" max="100" step="1" value="45" />
+              <span id="diversity-value" class="pill">0.45</span>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <label for="freshness-range">Freshness</label>
+            <div class="inline-inputs">
+              <input id="freshness-range" type="range" min="0" max="100" step="1" value="8" />
+              <span id="freshness-value" class="pill">0.08</span>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <label for="search-box">Movie Title Search</label>
+            <div class="inline-inputs">
+              <input id="search-box" type="text" placeholder="Try: Toy Story" />
+              <button id="search-btn" class="ghost" type="button">Search</button>
+            </div>
+          </div>
+
+          <button class="primary" type="submit">Recommend Now</button>
+        </form>
+
+        <p id="status" class="status muted">Ready.</p>
+      </section>
+
+      <section class="card panel reveal delay-2">
+        <div class="panel-head">
+          <h2>Recent Watch History</h2>
+          <p class="mono" id="history-count">0 items</p>
+        </div>
+        <div id="history-strip" class="strip"></div>
+      </section>
+
+      <section class="card panel reveal delay-3">
+        <div class="panel-head">
+          <h2>Top Recommendations</h2>
+          <p class="mono" id="result-count">0 items</p>
+        </div>
+        <div id="results-grid" class="results-grid"></div>
+      </section>
+
+      <section class="card panel reveal delay-4">
+        <div class="panel-head">
+          <h2>Search Results</h2>
+          <p class="mono" id="search-count">0 items</p>
+        </div>
+        <div id="search-grid" class="results-grid compact"></div>
+      </section>
+    </main>
+
+    <template id="movie-card-template">
+      <article class="movie-card">
+        <div class="rank-badge"></div>
+        <h3 class="movie-title"></h3>
+        <p class="movie-meta"></p>
+        <p class="movie-score"></p>
+        <div class="chips"></div>
+      </article>
+    </template>
+  </body>
+</html>
